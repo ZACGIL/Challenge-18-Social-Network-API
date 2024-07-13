@@ -17,13 +17,24 @@ module.exports = {
     },
     async getSingleFriend(req, res) {
         try {
-            const userFriend = await User.findOne({ _id: req.params.friendId });
-
-            if (!userFriend) {
+             const user = await User.findOne({ _id: req.params.userId });
+             const friend = await User.findOne({ _id: req.params.friendId });
+            
+            if (!friend || !user) {
                 return res.status(404).json({ message: 'No user with that ID' });
             }
 
-            res.json(userFriend);
+            let friendsArray = user.friends.map(el => el.toString());
+            let friendString = friend._id.toString();
+
+            for (let i = 0; i < user.friends; i++) {
+                if(user.friends[i] === friendString){
+                   return res.json(friend);
+                }
+            }
+            console.log(friendsArray, friendString );
+
+            res.status(404).json({ message: 'That user is not your friend' });
 
         } catch (err) {
             res.status(500).json(err);
@@ -37,7 +48,7 @@ module.exports = {
                 { new: true }
             );
 
-            res.json(user.friends);
+            res.json('Friend added!');
 
         } catch (err) {
             res.status(500).json(err);
@@ -51,7 +62,7 @@ module.exports = {
                 { new: true }
             );
 
-            res.json(user.friends);
+            res.json('Friend removed!');
 
         } catch (err) {
             res.status(500).json(err);
