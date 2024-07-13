@@ -1,4 +1,4 @@
-const { User, Application } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
     // Get all users
@@ -48,5 +48,5 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err);
         }
-    },
+    }
 };
