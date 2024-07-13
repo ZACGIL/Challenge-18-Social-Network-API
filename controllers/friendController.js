@@ -24,17 +24,18 @@ module.exports = {
                 return res.status(404).json({ message: 'No user with that ID' });
             }
 
-            let friendsArray = user.friends.map(el => el.toString());
-            let friendString = friend._id.toString();
+            // let friendsArray = user.friends.map(el => el.toString());
+            // let friendString = friend._id.toString();
 
-            for (let i = 0; i < user.friends; i++) {
-                if(user.friends[i] === friendString){
-                   return res.json(friend);
-                }
-            }
-            console.log(friendsArray, friendString );
+            // for (let i = 0; i < user.friends; i++) {
+            //     if(user.friends[i] === friendString){
+            //        return res.json(friend);
+            //     }
+            // }
+            // console.log(friendsArray, friendString );
 
-            res.status(404).json({ message: 'That user is not your friend' });
+            //res.status(404).json({ message: 'That user is not your friend' });
+            res.json(friend);
 
         } catch (err) {
             res.status(500).json(err);
