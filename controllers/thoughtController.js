@@ -9,7 +9,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No thoughts' });
             }
 
-            res.jsons(thought);
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -22,21 +22,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No thought with that ID' });
             }
 
-            res.jsons(thought);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
-    async getSingleThoughtFromUser(req, res) {
-        try {
-            const user = await User.findOne({ _id: req.params.userId });
-            const thought = await Thought.findOne({ _id: req.params.thoughtId });
-
-            if (!thought) {
-                return res.status(404).json({ message: 'No thought with that ID' });
-            }
-
-            res.jsons(thought);
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }
