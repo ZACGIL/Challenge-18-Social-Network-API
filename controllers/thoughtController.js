@@ -4,6 +4,24 @@ module.exports = {
     async getThoughts(req, res) {
         try {
             const thoughts = await Thought.find();
+
+            if (!thoughts) {
+                return res.status(404).json({ message: 'No thoughts' });
+            }
+
+            res.jsons(thoughts);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    async getSingleThought(req, res) {
+        try {
+            const thoughts = await Thought.findOne({ _id: req.params.thoughtId });
+
+            if (!thoughts) {
+                return res.status(404).json({ message: 'No thought with that ID' });
+            }
+
             res.jsons(thoughts);
         } catch (err) {
             res.status(500).json(err);
@@ -27,7 +45,7 @@ module.exports = {
             const thought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $addToSet: { thoughts: thought._id } },
+                { $addToSet: { thoughts: thought } },
                 { new: true }
             );
 
@@ -113,5 +131,5 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err);
         }
-    },
+    }
 };
