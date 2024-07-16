@@ -10,3 +10,6 @@ Below are videos and links to various requests capable in the back end using Ins
 
 ## Start Server and Get Routes
 [Start&Get.webm](https://github.com/user-attachments/assets/8d23e9a0-4ec4-4357-8234-97ebcd446a60)
+
+## Thoughts - Create, Put and Delete
+[ThoughtRoutes.webm](https://github.com/user-attachments/assets/e9599d50-5d63-42da-960a-7f3156615070)
