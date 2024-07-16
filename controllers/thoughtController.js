@@ -42,6 +42,7 @@ module.exports = {
     },
     async createThought(req, res) {
         try {
+            //get user then get username to dynamically inject into thought
             const thought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
@@ -91,7 +92,7 @@ module.exports = {
 
             if (!user) {
                 return res.status(404).json({ message: 'Thought created, but found no user with that ID' });
-            }
+            };
 
             res.json({ message: 'Thought successfully deleted!' });
         } catch (err) {
@@ -100,6 +101,7 @@ module.exports = {
     },
     async addReaction(req, res) {
         try {
+            //get user then get username to dynamically inject into reaction
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
                 { $addToSet: { reactions: req.body } },
@@ -108,7 +110,7 @@ module.exports = {
 
             if (!thought) {
                 return res.status(404).json({ message: 'No thought with this id!' });
-            }
+            };
 
             res.json(thought.reactions);
         } catch (err) {
@@ -117,17 +119,18 @@ module.exports = {
     },
     async removeReaction(req, res) {
         try {
-            const reaction = await Thought.findOneAndUpdate(
+            const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: req.body } },
-                { runValidators: true, new: true }
+                { $pull: { reactions: req.params.reactId } },
+                { new: true }
             );
 
             if (!reaction) {
                 return res.status(404).json({ message: 'No thought with this id!' });
-            }
+            };
 
-            res.json(thought.reactions);
+            res.json('Reaction removed!');
+
         } catch (err) {
             res.status(500).json(err);
         }
